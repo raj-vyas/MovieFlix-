@@ -1,0 +1,24 @@
+<h4>Tickets Booked For Show</h4>
+<button onclick="this.disabled=true;viewCompleteTickets()">View Complete History</button><br/>
+{% for movie,details in movie_name.items() %}
+    {% if "Booked" in details[5] %}
+        <button class="Gold" onclick="viewticketdetails({{movie}},{{category_seats}},{{movie_name}})">
+    {% else %}
+        <button class="Standard" onclick="viewticketdetails({{movie}},{{category_seats}},{{movie_name}})">
+    {% endif %}
+    <h5>Ticket Number: {{ movie }}</h5>
+    {{details[0]}} ({{details[4]}})<br/>
+    {% if details[2][2]==0 %}
+        <h6>Date & Time: {{details[1][2]}}/{{details[1][1]}}/{{details[1][0]}} {{details[2][0]}}:{%if details[2][1]==0 %}00{% else %}{{details[2][1]}}{% endif %} AM</h6>
+    {% else %}
+        <h6>Date & Time: {{details[1][2]}}/{{details[1][1]}}/{{details[1][0]}} {{details[2][0]}}:{%if details[2][1]==0 %}00{% else %}{{details[2][1]}}{% endif %} PM</h6>
+    {% endif %}
+    <h6>Language: {{details[3]}}<h6/>
+    {% for category,item in category_seats[movie].items() %} <h6>{{category}}: {{item}}</h6>{% endfor %}
+    {% if "Booked" in details[5] %}
+        <h6><b><span style="color: #00FF00">BOOKED</span></b></h6>
+    {% else %}
+        <h6><b><span style="color: #FF0000">CANCELLED</span></b></h6>
+    {% endif %}
+    </button>
+{% endfor %}

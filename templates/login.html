@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>MovieFlix!</title>
+	<link rel="icon" href="{{ url_for('static', filename='favicon-film.ico') }}">
+	<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icons/css/all.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.date.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.time.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+	<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.date.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.time.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='app.js') }}"></script>
+	<script>
+		$(document).ready(function() {
+			function disableBack() { window.history.forward() }
+	
+			window.onload = disableBack();
+			window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+		});
+		/*$(window).on('popstate', function(e) {
+  			var lastEntry = customHistory.pop();
+ 			 history.pushState(lastEntry.data, lastEntry.title, lastEntry.location);
+  			// load the last entry
+		});*/
+	</script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="jumbotron login-header">
+			<i class="fas fa-film"></i>
+			<!--h1>Movie Booking System</h1>
+			<h4>A one stop solution for Booking Movie Tickets</h4-->
+			<h1>Welcome to MovieFlix!</h1>
+			<h4>A one stop solution for Booking your Seats in Theatre</h4>
+		</div>
+		<div class="jumbotron module">
+			<form method="POST" action="/login" class="login100-form validate-form flex-sb flex-w">
+				<span class="login100-form-title p-b-51" style="color:red;">
+					{{ message }} 
+				</span>
+				<!--input type="text" name="email" placeholder="Email" autocomplete="off">
+				<input type="password" name="password" placeholder="Password" maxlength="15"-->
+				<div class="wrap-input100 validate-input m-b-16" data-validate = "Email is required">
+					<input class="input100" type="email" name="email" placeholder="Email" autocomplete="off">
+					<span class="focus-input100"></span>
+				</div>
+				<div class="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
+					<input class="input100" type="password" name="password" placeholder="Password" maxlength="15">
+					<span class="focus-input100"></span>
+				</div>
+				<div>
+					<div style="display: inline-block;">
+						{{ recaptcha}} 
+						{% for error in recaptcha.errors %}
+						<ul>
+							<li style="color:red;">{{ error }}</li>
+						{% endfor %}
+						   </ul>
+					</div>
+				</div>
+				<a href="{{ url_for('passreset')}}" class="txt1">
+					Forgot Password?
+				</a> 
+				<!--button type="submit"" class="btn btn-warning" name="submit_button" value="submit the form">Login</button><br/-->
+				<!--button>Login</button-->
+				<div class="container-login100-form-btn m-t-17">
+					<button class="btn btn-warning" name="submit_button">
+						Login
+					</button>
+					<div>
+				</div>
+				</div>
+				<div class="registration_link" style="margin-top:15pt">
+					<a href="{{ url_for('register') }}">New User? Click here to Register!</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

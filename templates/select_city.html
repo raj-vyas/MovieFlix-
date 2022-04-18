@@ -1,0 +1,22 @@
+<script type="text/javascript">
+$(function() {
+    $("#city_select").change(function() {
+        call_city($('option:selected',this).text());
+    });
+});
+</script>
+<!--input type="number" id="pincode_number" name='pincode' placeholder="Enter New Pincode To Find Nearby Theatres"/-->
+<select name="city" id="city_select">
+    <option onselect="document.getElementById().disabled=true;document.getElementById('pin_cancel');document.getElementById('pin_submit').disabled=true;">Select City</option>
+    {% for city in cities %}
+        <option name="city_select" onselect="call_set({{city}})">{{city}}</option>
+    {% endfor %}
+</select><br/>
+<!--select name="city" id="city_select" disabled>
+    <option onselect="document.getElementById().disabled=true;document.getElementById('pin_cancel');document.getElementById('pin_submit').disabled=true;">Select City</option>
+    {% for city in cities %}
+        <option name="city_select">{{city}}</option>
+    {% endfor %}
+</select><br/-->
+<!--button onclick="this.disabled=true;document.getElementById('pin_cancel').disabled=true;document.getElementById('pin_submit').disabled=true;change_pincode()" id="pin_submit">Change Pincode</button-->
+<button onclick="spinner_load()" id="pin_cancel">Cancel</button>

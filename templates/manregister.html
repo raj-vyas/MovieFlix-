@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MovieFlix!</title>
+	<link rel="icon" href="{{ url_for('static', filename='favicon-film.ico') }}">
+	<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icons/css/all.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.date.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.time.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.date.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.time.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='app.js') }}"></script>
+    <script>
+		$(document).ready(function() {
+			function disableBack() { window.history.forward() }
+	
+			window.onload = disableBack();
+			window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+		});
+	</script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="jumbotron login-header after-login">
+			<i class="fas fa-film"></i>
+			<h1>MovieFlix!</h1>
+		    <h4>A one stop solution for Booking your Seats in Theatre</h4>
+		</div>
+		<div class="jumbotron module module-after-login">
+            <div class="container-login100">
+                <div class="wrap-login100 p-t-50 p-b-90">
+                    <form class="login100-form validate-form flex-sb flex-w" method="POST" action="/manregister">
+                        
+                        <span class="login100-form-title p-b-51" style="color:red;">
+                            {{ message }} 
+                        </span>
+                        <h4>Manager registeration</h4>
+                        <div class="wrap-input100 validate-input m-b-16" data-validate = "First Name is required">
+                            <input class="input100" type="text" name="fname" placeholder="First Name" autocomplete="off">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-16" data-validate = "Last Name is required">
+                            <input class="input100" type="text" name="lname" placeholder="Last Name" autocomplete="off">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-16" data-validate = "Email is required">
+                            <input class="input100" type="email" name="email" placeholder="Email" autocomplete="off">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
+                            <input class="input100" type="password" name="password" placeholder="Password" maxlength="15">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-16" data-validate = "Confirm Password is required">
+                            <input class="input100" type="password" name="cnfpassword" placeholder="Confirm Password" maxlength="15">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-16" data-validate = "Theatre Name is required">
+                            <input class="input100" type="text" name="theatre_name" placeholder="Theatre Name" autocomplete="off">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-16" data-validate = "Theatre Address is required">
+                            <textarea class="input100" type="text" name="theatre_address" placeholder="Theatre Address" cols="40" rows="3"  autocomplete="off"></textarea>
+                            <span class="focus-input100"></span>
+                        </div>
+                        <!--div class="wrap-input100 validate-input m-b-16" data-validate = "Theatre Pincode is required">
+                            <input class="input100" type="number" name="theatre_pincode" placeholder="Theatre Pincode" autocomplete="off">
+                            <span class="focus-input100"></span>
+                        </div-->
+                        <select name="state" id="state_select_register" class="select-options">
+                            <option name="state_select" value="Select State">Select State</option>
+                            {% for state in states %}
+                                <option name="state_select" value="{{state}}">{{state}}</option>
+                            {% endfor %}
+                        </select><br/>
+                        <select name="city" id="city_select_register" class="select-options" disabled>
+                            <option name="city_select" value="Select City">Select City</option>
+                            {% for state,city in cities.items() %}
+                                {% for city_one in city %}
+                                    <option name="{{state}}" value="{{city_one}}">{{city_one}}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select><br/>
+                        <div class="flex-sb-m w-full p-t-3 p-b-24">
+                            <div>
+                                <a href="{{ url_for('login') }}">
+                                    Go Back
+                                </a>
+                            </div>  
+                        </div>
+                        <div class="container-login100-form-btn m-t-17">
+                            <button class="btn btn-warning">
+                                Register
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#state_select_register").change(function() {
+            if ($(this).data('options') === undefined) {
+                /*Taking an array of all options-2 and kind of embedding it on the select1*/
+                $(this).data('options', $('#city_select_register option').clone());
+            }
+            //call_city($('option:selected',this).text());
+            if($('option:selected',this).text().localeCompare("Select State")==0){
+                $('#city_select_register').prop('disabled',true);
+                var options = $(this).data('options').filter('[value="Select City"]');
+                $('#city_select_register').html(options);
+            }
+            else{
+                $('#city_select_register').prop('disabled',false);
+                var options = $(this).data('options').filter('[name="'+$('option:selected',this).text()+'"]');
+                $('#city_select_register').html(options);
+                //$('#state_select').prop('disabled',true);
+            }
+        });
+        </script>
+</body>
+</html>

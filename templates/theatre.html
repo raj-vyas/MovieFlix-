@@ -1,0 +1,4 @@
+<h4>Select Theatre</h4>
+{% for theatre in theatre_list %}
+<button onclick="selectTheatre('{{ theatre[0] }}')">{{ theatre[1] }}<br/> {{ theatre[2] }} <br/></button>
+{% endfor %}

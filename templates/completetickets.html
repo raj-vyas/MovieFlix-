@@ -1,0 +1,18 @@
+{% for ticket in tickets %}
+    {% if ticket[8]=="Cancelled" %}
+        <div class="Standard">
+    {% else %}
+        <div class="Gold">
+    {% endif %}
+    <h5>Ticket Number: {{ ticket[0] }}</h5>
+    <h6>{{ ticket[5] }}</h6>
+    <h6>Date and Time: {{ ticket[6] }} {{ ticket[7] }}</h6>
+    <h6>{{ ticket[2] }}</h6>
+    <h6>Total Price: ₹{{ ticket[4] }}</h6>
+    {% if ticket[8]=="Cancelled" %}
+        <span style="color: #FF0000">Cancelled</span>
+    {% else %}
+        <span style="color: #00FF00">{{ ticket[8] }}</span>
+    {% endif %}
+    </div>
+{% endfor %}

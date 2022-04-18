@@ -1,0 +1,26 @@
+<h4>Available Seats</h4>
+<h5>Gold</h5>
+{% for seat in goldSeats %}
+<button id="{{seat[0]}}-gold" onClick="changed('{{seat[0]}}-gold',{{seat[0]}})" {{ seat[1] }}>{{ seat[0] }}</button>
+{% endfor %}
+<h5>Standard</h5>
+{% for seat in standardSeats %}
+<button id="{{seat[0]}}-standard" onClick="changed('{{seat[0]}}-standard',{{seat[0]}})" {{ seat[1] }}>{{ seat[0] }}</button>
+{% endfor %}
+<br/>
+<!--button name="cancel" class="btn btn-warning" id="cancel" onclick="location.href='/'">Cancel</button>
+<button name="book" class="btn btn-warning" id="book" onclick="selectSeats(seats)">Book Now!</button-->
+<script>
+    var seats={}
+    function changed(id,no){
+        if(document.getElementById(id).classList.contains("onselect")){
+            document.getElementById(id).classList.remove("onselect");
+            delete seats[String(id)]
+        }
+        else{
+            document.getElementById(id).classList.add("onselect");
+            seats[String(id)]=no;
+        }
+        selectSeats(seats);
+    }
+</script>

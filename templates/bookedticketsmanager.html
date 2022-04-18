@@ -1,0 +1,19 @@
+<h4>Booked Tickets</h4>
+{% for key,value in tickets.items() %}
+    {%if "Booked" in status[key] %}
+        <div class="Gold">
+    {% else %}
+        <div class="Standard">
+    {% endif %}
+    <h5>Ticket Number: {{key}}</h5>
+    {% for i,j in value.items() %}
+        <h6>{{i}}: {{j}}</h6>
+    {% endfor %}
+    <h6>Email: {{emails[key]}}</h6>
+    {%if "Booked" in status[key] %}
+        <h6><b><span style="color:#00FF00">BOOKED</span></b></h6>
+    {% else %}
+        <h6><b><span style="color:#FF0000">CANCELLED</span></b></h6>
+    {% endif %}
+    </div>
+{% endfor %}

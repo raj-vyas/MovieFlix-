@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MovieFlix!</title>
+	<link rel="icon" href="{{ url_for('static', filename='favicon-film.ico') }}">
+	<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icons/css/all.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.date.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.time.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/picker.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/picker.date.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/picker.time.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='app.js') }}"></script>
+    <script type="text/javascript">
+		$(function() {
+			$('#datepicker-cashier').pickadate({
+				min : new Date(),
+				formatSubmit: 'yyyy/mm/dd',
+				hiddenName: true,
+				onSet: function( event ) {
+					if ( event.select ) {
+						$('#datepicker-cashier').prop('disabled', true);
+						getMoviesShowingOnDate(this.get('select', 'yyyy/mm/dd' ));
+					}
+				}
+			}); 
+		});
+	</script>
+</head>
+<body>
+<div class="container-fluid">
+   
+    <div class="module module-after-login">
+            <form class="login100-form validate-form flex-sb flex-w"  method="GET"  method="GET" action="/add">
+                <span class="login100-form-title p-b-51" style="color:red;">
+					{{ message }} 
+				</span>
+                <div class="wrap-input100 validate-input m-b-16" data-validate = "Coupoun is required">
+                    <input class="input100" type="text" name="cpn_name" placeholder="Enter  Coupoun Name"  autocomplete="off">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-16" >
+                    <input class="input100" type="number" name="cpn_discount" placeholder="Enter  Discount %"  autocomplete="off">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-16" >
+                    <input id="datepicker-cashier"  name="cpn_date" placeholder="Enter  last Date" autocomplete="off">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-16" >
+                    <input class="input100" name="cpn_extra" placeholder="re-enter coupoun name" autocomplete="off">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="container-login100-form-btn m-t-17">
+                    <button class="btn btn-warning">
+                        Submit
+                    </button>
+                </div>
+                
+            </form>
+        </div>
+</div>
+</body>
+</html>s

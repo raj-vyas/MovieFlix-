@@ -1,0 +1,4 @@
+<h4>Shows Showing</h4>
+{% for show in shows %}
+<button onclick="selectShow({{ show[0] }})">{{ show[1] }} {{ show[2] }} ({{ show[4] }}) at {{ show[3][0] }}:{{ show[3][1] }} {% if show[3][2]==0 %}AM{% else %}PM{% endif %}</button>
+{% endfor %}

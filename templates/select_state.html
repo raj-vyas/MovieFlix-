@@ -1,0 +1,56 @@
+<script type="text/javascript">
+    var id = null;
+    var id1 = null;
+    $("#state_select").change(function() {
+        if ($(this).data('options') === undefined) {
+            /*Taking an array of all options-2 and kind of embedding it on the select1*/
+            $(this).data('options', $('#city_select option').clone());
+        }
+        //call_city($('option:selected',this).text());
+        id = $('option:selected',this).text();
+        if(id.localeCompare("Select State")==0){
+            $('#city_select').prop('disabled',true);
+            var options = $(this).data('options').filter('[value="Select City"]');
+            $('#city_select').html(options);
+        }
+        else{
+        $('#city_select').prop('disabled',false);
+        var options = $(this).data('options').filter('[value="'+id+'"]');
+        $('#city_select').html(options);
+        //$('#state_select').prop('disabled',true);
+        }
+    });
+    /*$("#city_select").change(function() {
+        id1 = $('option:selected',this).text();
+    });*/
+    $("#submit_city").click(function() {
+        $("#state_select").prop('disabled',true);
+        $("#city_select").prop('disabled',true);
+        //alert(id1);
+        change_city($('option:selected','#state_select').text(),$('option:selected','#city_select').text());
+    });
+</script>
+<!--input type="number" id="pincode_number" name='pincode' placeholder="Enter New Pincode To Find Nearby Theatres"/-->
+<select name="state" id="state_select" class="select-options">
+    <option name="state_select" value="Select State">Select State</option>
+    {% for state in states %}
+        <option name="state_select" value="{{state}}">{{state}}</option>
+    {% endfor %}
+</select><br/>
+<select name="city" id="city_select" class="select-options" disabled>
+    <option name="city_select" value="Select City">Select City</option>
+    {% for state,city in cities.items() %}
+        {% for city_one in city %}
+            <option name="city_select" value="{{state}}">{{city_one}}</option>
+        {% endfor %}
+    {% endfor %}
+</select><br/>
+<!--select name="city" id="city_select" disabled>
+    <option onselect="document.getElementById().disabled=true;document.getElementById('pin_cancel');document.getElementById('pin_submit').disabled=true;">Select City</option>
+    {% for city in cities %}
+        <option name="city_select">{{city}}</option>
+    {% endfor %}
+</select><br/-->
+<!--button onclick="this.disabled=true;document.getElementById('pin_cancel').disabled=true;document.getElementById('pin_submit').disabled=true;change_pincode()" id="pin_submit">Change Pincode</button-->
+<button type="submit" onclick="document.getElementById('state_select').disabled=true;document.getElementById('city_select').disabled=true;document.getElementById('pin_cancel').disabled=true;this.disabled=true;" id="submit_city">Change City</button>
+<button onclick="document.getElementById('state_select').disabled=true;document.getElementById('city_select').disabled=true;spinner_load()" id="pin_cancel">Cancel</button>

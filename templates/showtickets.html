@@ -1,0 +1,17 @@
+<h4>Your Booked Tickets will show here after booking</h4>
+{% for ticket in tickets %}
+{% if "Gold" in ticket[3] %}
+    <button class="Gold">
+{% else %}
+    <button class="Standard">
+{% endif %}
+<h5>Ticket Number: {{ ticket[0] }}</h5>
+<h6>Movie Name: {{ ticket[1] }}</h6>
+<h6>Seat Number: {{ ticket[2] }} / {{ ticket[3] }}</h6>
+{% if ticket[5][2]==0 %}
+    <h6>Date & Time: {{ ticket[4][2] }}/{{ ticket[4][1] }}/{{ ticket[4][0] }} at {{ ticket[5][0] }}:{{ ticket[5][1] }} AM</h6>
+{% else %}
+    <h6>Date & Time: {{ ticket[4][2] }}/{{ ticket[4][1] }}/{{ ticket[4][0] }} at {{ ticket[5][0] }}:{{ ticket[5][1] }} PM</h6>
+{% endif %}
+</button>
+{% endfor %}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MovieFlix!</title>
+	<link rel="icon" href="{{ url_for('static', filename='favicon-film.ico') }}">
+	<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icons/css/all.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.date.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.time.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+	<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.date.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.time.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='app.js') }}"></script>
+	<script>
+		$(document).ready(function() {
+			function disableBack() { window.history.forward() }
+	
+			window.onload = disableBack();
+			window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+		});
+
+		$(window).on('popstate', function(e) {
+  			var lastEntry = customHistory.pop();
+ 			 history.pushState(lastEntry.data, lastEntry.title, lastEntry.location);
+  			// load the last entry
+		});
+
+		function details(){
+			alert({{ theatre_name|tojson }}+"\n"+{{ theatre_address|tojson }});
+		}
+	</script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="jumbotron login-header after-login">
+			<i class="fas fa-film"></i>
+			<h1>MovieFlix!</h1>
+			<h4>A one stop solution for Booking your Seats in Theatre</h4>
+		</div>
+		<div class="module module-after-login">
+			<button onclick="spinner_load()" class="btn btn-warning">Reset</button>
+			<button style="display: inline-block; vertical-align: middle; margin-left: 25px; margin-right: 25px; margin-top: 28px; font-size: 32px; border: 3px solid #FFFFFF; padding-bottom: 6px; padding-top: 3px; padding-left: 8px; padding-right: 8px; border-radius: 20px" onclick="details()">Manager</button>
+			<a href="{{ url_for('logout') }}"><button class="btn btn-warning">Logout</button></a>
+			<button onclick="location.href='/manregister'" class="btn btn-warning">Add new manager</button>
+			<!--<button onclick="location.href='/admin/mgr'" class="btn btn-warning">manager list </button>-->
+			<!--<button><a  href="{{ url_for('manregister')}}">Add new Manager</a></button>-->
+			<div id="options">
+				<button onclick="viewBookedTickets()">View Bookings</button>
+				<button onclick="insertMovie()">Insert a Movie</button>
+				<button onclick="createShow()">Schedule a Show</button>
+				<button onclick="alterPricing()">Alter Prices</button>
+				
+			</div>
+			<!--div><h5>{{theatre_name}}</h5><h6>{{theatre_address}}</h6></div-->
+			<div id="manager-dynamic-1"></div>
+			<div id="manager-dynamic-2"></div>
+			<div id="manager-dynamic-3"></div>
+			<div id="manager-dynamic-4"></div>
+			<div id="manager-dynamic-5"></div>
+			<div id="loader" class="lds-dual-ring hidden overlay"></div>
+		</div>
+	</div>
+</body>
+</html>

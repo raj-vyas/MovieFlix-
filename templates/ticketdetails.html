@@ -1,0 +1,27 @@
+{% if "Booked" in movie_name[5] %}
+    <div class="Gold">
+{% else %}
+    <div class="Standard">
+{% endif %}
+<h5>Ticket Number: {{movie_no}}</h5>
+<h5>{{movie_name[0]}} ({{movie_name[4]}})</h5>
+<h5>{{movie_name[1][2]}}/{{movie_name[1][1]}}/{{movie_name[1][0]}} at {{movie_name[2][0]}}:{% if movie_name[2][1]==0 %}00{% else %}{{movie_name[2][1]}}{% endif %} {% if movie_name[2][2]==0 %}AM{% else %}PM{% endif %}</h5>
+<h5>Language: {{movie_name[3]}}</h5><br/>
+{% for key,value in seats.items() %}<h5>{{key}}: {{value}}</h5>{% endfor %}
+<h6>{{res[0]}}, {{res[1]}}</h6>
+<h5>Total Price: ₹{{price}}</h5>
+{% if "Booked" in movie_name[5] %}
+    <h5>Status: <span style="color:#00FF00">{{movie_name[5]}}</span></h5>
+{% else %}
+    <h5>Status: <span style="color:#FF0000">{{movie_name[5]}}</span></h5>
+{% endif %}
+<button id="cancel-cancel-btn" onclick="spinner_load()">Go Back</button>
+{% if "Booked" in movie_name[5] %}
+    {% if cancel_validator==1 %}
+        <button id="confirm-cancel-btn" onclick="this.disabled=true;document.getElementById('cancel-cancel-btn').disabled=true;document.getElementById('qr-btn').disabled=true;cancelask({{movie_no}})">Cancel Ticket</button>
+        <button id="qr-btn" onclick="this.disabled=true;document.getElementById('cancel-cancel-btn').disabled=true;document.getElementById('confirm-cancel-btn').disabled=true;send_qr({{movie_no}},{{movie_name}},{{seats}})">Mail QR Code</button>
+    {% else %}
+        <button id="qr-btn" onclick="this.disabled=true;document.getElementById('cancel-cancel-btn').disabled=true;send_qr({{movie_no}},{{movie_name}},{{seats}})">Mail QR Code</button>
+    {% endif %}
+{% endif %}
+</div>
